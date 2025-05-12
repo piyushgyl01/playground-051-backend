@@ -26,4 +26,4 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("pg50user", userSchema);
+module.exports = mongoose.model("pg51user", userSchema);

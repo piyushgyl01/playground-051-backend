@@ -267,16 +267,16 @@ app.post("/auth/refresh-token", async (req, res) => {
   }
 });
 
-async function insertData(data) {
+app.get("/movies", async (req, res) => {
   try {
-    const savedData = await Movie.insertMany(data);
-    console.log(savedData);
+    const movies = await Movie.find();
+    res.status(200).json(movies);
   } catch (error) {
-    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
-}
-
-insertData
+});
 
 app.listen(3002, () => {
   console.log("Server is running on 3002");
