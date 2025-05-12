@@ -309,6 +309,24 @@ app.post("/movies", async (req, res) => {
   }
 });
 
+app.put("/movies/:id", async (req, res) => {
+  try {
+    const editedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    if (!editedMovie) {
+      return res.status(404).json({ message: "Unable to find the movie" });
+    }
+
+    res.status(200).json(editedMovie);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(3002, () => {
   console.log("Server is running on 3002");
 });
