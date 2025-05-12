@@ -327,6 +327,27 @@ app.put("/movies/:id", async (req, res) => {
   }
 });
 
+app.delete("/movies/:id", async (req, res) => {
+  try {
+    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
+
+    if (!deletedMovie) {
+      return res.status(404).json({ message: "Unable to find the movie" });
+    }
+
+    res
+      .status(200)
+      .json({
+        message: "Movie deleted successfully",
+        deletedMovie: deletedMovie,
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(3002, () => {
   console.log("Server is running on 3002");
 });
