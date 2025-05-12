@@ -16,11 +16,11 @@ const User = require("./models/user.model");
 
 const corsOptions = {
   origin: [
-    "http://localhost:5173",
     "https://playground-051-frontend.vercel.app",
+    "http://localhost:5173",
   ],
   credentials: true,
-  optionsSuccessStatus: true,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -95,7 +95,6 @@ function clearAuthCookies(res) {
     maxAge: 0,
   });
 }
-
 app.get("/", (req, res) => {
   res.json({ message: "Movie Database! Browse your favorite movies" });
 });
@@ -335,12 +334,10 @@ app.delete("/movies/:id", async (req, res) => {
       return res.status(404).json({ message: "Unable to find the movie" });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Movie deleted successfully",
-        deletedMovie: deletedMovie,
-      });
+    res.status(200).json({
+      message: "Movie deleted successfully",
+      deletedMovie: deletedMovie,
+    });
   } catch (error) {
     res
       .status(500)
