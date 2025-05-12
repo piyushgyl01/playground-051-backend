@@ -289,6 +289,26 @@ app.get("/movies/:id", async (req, res) => {
   }
 });
 
+app.post("/movies", async (req, res) => {
+  const { name, director, plot } = req.body;
+
+  if (!name || !director || !plot) {
+    return res
+      .status(403)
+      .json({ message: "Please fill in all the required fields" });
+  }
+
+  try {
+    const newMovie = new Movie({ name, director, plot });
+    const savedMovie = await newMovie.save();
+    res.status(201).json(savedMovie);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
 app.listen(3002, () => {
   console.log("Server is running on 3002");
 });
